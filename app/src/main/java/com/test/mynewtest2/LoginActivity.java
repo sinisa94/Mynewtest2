@@ -17,6 +17,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.test.mynewtest2.models.User;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
@@ -50,6 +51,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         findViewById(R.id.verify_email_button).setOnClickListener(this);
 
         // [START initialize_auth]
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
     }
@@ -147,6 +149,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         mAuth.signOut();
         updateUI(null);
     }
+
 
     private void sendEmailVerification() {
         // Disable button

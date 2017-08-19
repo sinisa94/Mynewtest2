@@ -6,15 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.test.mynewtest2.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/button_login"
         android:layout_width="wrap_content"
@@ -34,5 +25,15 @@
         android:text="database"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/currentuser_txt"
+        android:layout_width="278dp"
+        android:layout_height="98dp"
+        android:layout_marginBottom="16dp"
+        android:text="username will appear"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="75dp"
+        tools:layout_editor_absoluteY="398dp" />
 
 </android.support.constraint.ConstraintLayout>

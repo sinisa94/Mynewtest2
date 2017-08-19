@@ -32,6 +32,10 @@ public class DatabaseActivity extends BaseActivity {
     private Button add_btn;
     private static final String REQUIRED = "Required";
     private static final String TAG = "DatabaseActivity";
+    // [START declare_auth]
+    private FirebaseAuth mAuth;
+    // [END declare_auth]
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +47,14 @@ public class DatabaseActivity extends BaseActivity {
         add_btn = (Button) findViewById(R.id.button_add);
         name_text_input = (EditText) findViewById(R.id.name_txt_input);
         body_text_input = (EditText) findViewById(R.id.body_txt_input);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        //if (user != null){
+        //   uname_txt.setText(getString(R.string.firebase_status_fmt,user.getEmail()));
+
+        //}
+
+
+
         //dec
         add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +65,10 @@ public class DatabaseActivity extends BaseActivity {
 
 
 
+
+
     }
+
     private void submitPost() {
         final String item_name = name_text_input.getText().toString();
         final String item_body = body_text_input.getText().toString();
@@ -78,6 +93,7 @@ public class DatabaseActivity extends BaseActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // Get user value
+
                         User user = dataSnapshot.getValue(User.class);
 
                         // [START_EXCLUDE]
@@ -89,6 +105,7 @@ public class DatabaseActivity extends BaseActivity {
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             // Write new post
+                            uname_txt.setText(user.username);
                             writeNewPost(userId, user.username, item_name, item_body);
                         }
 

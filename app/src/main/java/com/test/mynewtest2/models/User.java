@@ -3,6 +3,7 @@ package com.test.mynewtest2.models;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 // [START blog_user_class]
+
 @IgnoreExtraProperties
 public class User {
 
