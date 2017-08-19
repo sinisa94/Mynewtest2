@@ -3,7 +3,7 @@ package com.test.mynewtest2;
 import android.app.ProgressDialog;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
-
+import com.test.mynewtest2.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class BaseActivity extends AppCompatActivity {

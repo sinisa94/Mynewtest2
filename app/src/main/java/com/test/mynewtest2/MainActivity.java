@@ -14,6 +14,7 @@ import com.test.mynewtest2.models.User;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
+    private Button btn_login,btn_db,btn_items,btn_newpost;
     private TextView curr_usr;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,15 +22,28 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.activity_main);
-        Button btn_login = (Button) findViewById(R.id.button_login);
-        Button btn_db = (Button) findViewById(R.id.button_database);
+        btn_login = (Button) findViewById(R.id.button_login);
+        btn_db = (Button) findViewById(R.id.button_database);
+        btn_items = (Button) findViewById(R.id.items_button);
+        btn_newpost = (Button) findViewById(R.id.newpost_button);
         curr_usr = (TextView) findViewById(R.id.currentuser_txt);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();;
         if (mAuth.getCurrentUser() != null) {
             btn_login.setText("You're allready signed in");
             curr_usr.setText(getString(R.string.firebase_status_fmt,user.getEmail()));
             }
-
+        btn_items.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,ItemsActivity.class));
+            }
+        });
+        btn_newpost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, NewPostActivity.class));
+            }
+        });
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

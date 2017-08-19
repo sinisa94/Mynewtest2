@@ -18,7 +18,9 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".DatabaseActivity" />
-        <activity android:name=".PostDetailActivity"></activity>
+        <activity android:name=".PostDetailActivity" />
+        <activity android:name=".ItemsActivity" />
+        <activity android:name=".NewPostActivity"></activity>
     </application>
 
 </manifest>
