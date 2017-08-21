@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         btn_items.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,ItemsActivity.class));
+                startActivity(new Intent(MainActivity.this,ListActivity.class));
             }
         });
         btn_newpost.setOnClickListener(new View.OnClickListener() {
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
             }
         });
-        btn_login.setOnClickListener(new View.OnClickListener() {
+        btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mAuth.signOut();

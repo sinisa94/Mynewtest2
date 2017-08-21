@@ -20,7 +20,8 @@
         <activity android:name=".DatabaseActivity" />
         <activity android:name=".PostDetailActivity" />
         <activity android:name=".ItemsActivity" />
-        <activity android:name=".NewPostActivity"></activity>
+        <activity android:name=".NewPostActivity" />
+        <activity android:name=".ListActivity"></activity>
     </application>
 
 </manifest>
