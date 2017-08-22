@@ -14,7 +14,7 @@ import com.test.mynewtest2.models.User;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private Button btn_login,btn_db,btn_items,btn_newpost,btn_logout;
+    private Button btn_login,btn_db,btn_items,btn_newpost,btn_logout,btn_map;
     private TextView curr_usr;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         btn_logout = (Button) findViewById(R.id.button_logout);
         btn_db = (Button) findViewById(R.id.button_database);
         btn_items = (Button) findViewById(R.id.items_button);
+        btn_map = (Button) findViewById(R.id.button_map);
         btn_newpost = (Button) findViewById(R.id.newpost_button);
         curr_usr = (TextView) findViewById(R.id.currentuser_txt);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();;
@@ -37,6 +38,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this,ListActivity.class));
+            }
+        });
+        btn_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,MapsActivity.class));
             }
         });
         btn_newpost.setOnClickListener(new View.OnClickListener() {
