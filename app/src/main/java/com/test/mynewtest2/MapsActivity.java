@@ -56,15 +56,6 @@ public class MapsActivity extends AppCompatActivity {
     public double x;
     public double y;
 
-    public static class A {
-        static double a_number = 0;
-        double getNumber(double a_number2) {
-            a_number = a_number2;
-            return a_number;
-        }
-    }
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,10 +67,7 @@ public class MapsActivity extends AppCompatActivity {
         mLongitudeText = (TextView) findViewById((R.id.longitude_text));
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         txtView = (TextView) findViewById(R.id.textView);
-        A a = new A();
-        MainActivity.getLocVal glv = new MainActivity.getLocVal();
-        glv.getVals(x);
-        txtView.setText(Double.toString(glv.a_value));
+
 
     }
 
@@ -123,6 +111,10 @@ public class MapsActivity extends AppCompatActivity {
                             x = mLastLocation.getLatitude();
                             y = mLastLocation.getLongitude();
                             locLong = Double.toString(x);
+                            MainActivity.getLocVal glv = new MainActivity.getLocVal();
+                            glv.getVals(x,y);
+
+                            txtView.setText( "l1" + Double.toString(glv.longitude)+ "l2" + Double.toString(glv.latitude));
                         } else {
                             Log.w(TAG, "getLastLocation:exception", task.getException());
                             showSnackbar(getString(R.string.no_location_detected));

@@ -33,10 +33,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 public static class getLocVal {
-    static double a_value;
-    double getVals(double x) {
-        a_value=x;
-        return a_value;
+    static double longitude, latitude;
+    double[] getVals(double x, double y) {
+        double[] longlat = new double[2];
+        longlat[0] = x;
+        longlat[1] = y;
+        longitude = x;
+        latitude = y;
+        return longlat;
     }
 }
 
@@ -62,12 +66,6 @@ public static class getLocVal {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-
-// tested: class in MapsActivity to set value from MainActivity
-       MapsActivity.A a = new MapsActivity.A();
-        a.getNumber(132.1);
-
-
         if (mAuth.getCurrentUser() != null) {
             btn_login.setText("ok");
             //curr_usr.setText(getString(R.string.firebase_status_fmt,user.getEmail()));
@@ -84,7 +82,7 @@ public static class getLocVal {
             public void onClick(View view) {
                 getLocVal glv = new getLocVal();
 
-                test_txt.setText(Double.toString(glv.a_value));
+                test_txt.setText(Double.toString(glv.longitude));
 
             }
         });
