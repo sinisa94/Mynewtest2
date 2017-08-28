@@ -53,8 +53,8 @@ public class MapsActivity extends AppCompatActivity {
     private TextView mLongitudeText;
     private TextView txtView;
     public String locLong;
-    public double x;
-    public double y;
+    public double x;// longitude
+    public double y;//latitude
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,8 +108,8 @@ public class MapsActivity extends AppCompatActivity {
                             mLongitudeText.setText(String.format(Locale.ENGLISH, "%s: %f",
                                     mLongitudeLabel,
                                     mLastLocation.getLongitude()));
-                            x = mLastLocation.getLatitude();
-                            y = mLastLocation.getLongitude();
+                            y = mLastLocation.getLatitude(); //latitude for all other activities
+                            x = mLastLocation.getLongitude(); // longitude for all other activities
                             locLong = Double.toString(x);
                             MainActivity.getLocVal glv = new MainActivity.getLocVal();
                             glv.getVals(x,y);

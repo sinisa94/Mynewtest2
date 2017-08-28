@@ -37,15 +37,6 @@ public class ListActivity extends AppCompatActivity {
         textView4 = (TextView) findViewById(R.id.textView4);
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, list);
         listView.setAdapter(adapter);
-
-
-
-
-
-
-
-
-
         mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase = mDatabase.child("posts");
@@ -86,20 +77,11 @@ public class ListActivity extends AppCompatActivity {
                         adapter.notifyDataSetChanged();
                     }
 
-
-
-
-
-
-
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
-
         });
     }
 }

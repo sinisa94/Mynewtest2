@@ -1,6 +1,5 @@
 package com.test.mynewtest2;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -10,13 +9,13 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import com.test.mynewtest2.R;
 import com.test.mynewtest2.fragment.RecentPostsFragment;
 import com.test.mynewtest2.fragment.MyPostsFragment;
 import com.google.firebase.auth.FirebaseAuth;
+
 public class ItemsActivity extends BaseActivity {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "ItemsActivity";
 
     private FragmentPagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
@@ -24,7 +23,7 @@ public class ItemsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_items);
 
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -33,8 +32,8 @@ public class ItemsActivity extends BaseActivity {
                     new MyPostsFragment(),
             };
             private final String[] mFragmentNames = new String[] {
-                    //    getString(R.string.heading_recent),
-                    //getString(R.string.heading_my_posts),
+                       getString(R.string.heading_recent),
+                    getString(R.string.heading_my_posts),
             };
             @Override
             public Fragment getItem(int position) {
@@ -63,7 +62,7 @@ public class ItemsActivity extends BaseActivity {
             }
         });
     }
- /* Todo firgure it out tho :P
+  //Todo firgure it out tho :P
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -82,6 +81,5 @@ public class ItemsActivity extends BaseActivity {
             return super.onOptionsItemSelected(item);
         }
     }
-    **/
 
 }

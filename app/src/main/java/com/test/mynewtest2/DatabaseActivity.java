@@ -1,6 +1,5 @@
 package com.test.mynewtest2;
 
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -21,7 +20,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.test.mynewtest2.models.Post;
 import com.test.mynewtest2.models.User;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,6 +30,7 @@ public class DatabaseActivity extends BaseActivity {
     private Button add_btn;
     private static final String REQUIRED = "Required";
     private static final String TAG = "DatabaseActivity";
+
     // [START declare_auth]
     private FirebaseAuth mAuth;
     // [END declare_auth]
@@ -42,31 +41,17 @@ public class DatabaseActivity extends BaseActivity {
         setContentView(R.layout.activity_database);
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-
         uname_txt = (TextView) findViewById(R.id.username_txt);
         add_btn = (Button) findViewById(R.id.button_add);
         name_text_input = (EditText) findViewById(R.id.name_txt_input);
         body_text_input = (EditText) findViewById(R.id.body_txt_input);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        //if (user != null){
-        //   uname_txt.setText(getString(R.string.firebase_status_fmt,user.getEmail()));
-
-        //}
-
-
-
-        //dec
         add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 submitPost();
             }
         });
-
-
-
-
-
     }
 
     private void submitPost() {
@@ -83,8 +68,6 @@ public class DatabaseActivity extends BaseActivity {
             body_text_input.setError(REQUIRED);
             return;
         }
-
-
 
         // [START single_value_read]
         final String userId = getUid();
@@ -124,15 +107,7 @@ public class DatabaseActivity extends BaseActivity {
                     }
                 });
         // [END single_value_read]
-
-
     }
-
-
-
-
-
-
 
     private void setEditingEnabled(boolean enabled) {
         name_text_input.setEnabled(enabled);
@@ -144,15 +119,14 @@ public class DatabaseActivity extends BaseActivity {
         }
     }
 
-
-
-
-
     private void writeNewPost(String userId, String username, String title, String body) {
         // Create new post at /user-posts/$userid/$postid and at
         // /posts/$postid simultaneously
+        MainActivity.getLocVal glv = new MainActivity.getLocVal();
+        double longitude = glv.longitude;
+        double latitude = glv.latitude;
         String key = mDatabase.child("posts").push().getKey();
-        Post post = new Post(userId, username, title, body);
+        Post post = new Post(userId, username, title, body, longitude, latitude);
         Map<String, Object> postValues = post.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();
@@ -163,5 +137,3 @@ public class DatabaseActivity extends BaseActivity {
     }
     // [END write_fan_out]
 }
-
-
