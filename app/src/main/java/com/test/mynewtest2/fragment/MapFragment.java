@@ -30,6 +30,16 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+//import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.test.mynewtest2.models.Pins;
+import com.test.mynewtest2.models.Post;
+//import com.google.firebase.database.FirebaseDatabase;
 
 public class MapFragment extends SupportMapFragment
         implements OnMapReadyCallback,
@@ -37,12 +47,16 @@ public class MapFragment extends SupportMapFragment
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
+    //private DatabaseReference mDatabase;
     GoogleMap mGoogleMap;
     SupportMapFragment mapFrag;
     LocationRequest mLocationRequest;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     Marker mCurrLocationMarker;
+    // [START define_database_reference]
+    private DatabaseReference mDatabase;
+    // [END define_database_reference]
 
     @Override
     public void onResume() {
@@ -90,8 +104,41 @@ public class MapFragment extends SupportMapFragment
             buildGoogleApiClient();
             mGoogleMap.setMyLocationEnabled(true);
         }
+
+
+        ///middle of onMapReady
+
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = mDatabase.child("posts");
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (final DataSnapshot DataSnapshot : snapshot.getChildren()) {
+                    //Getting the data from snapshot
+                    Post post = DataSnapshot.getValue(Post.class);
+
+                    double longitude = post.longitude;
+                    double latitude = post.latitude;
+                    String title = post.title;
+                    LatLng newLocation = new LatLng(latitude,longitude);
+                    mGoogleMap.addMarker(new MarkerOptions()
+                            .position(newLocation)
+                            .title(title));
+
+                }
+
+                }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
     }
 
+
+///// end of onMapReady
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                 .addConnectionCallbacks(this)
@@ -129,15 +176,15 @@ public class MapFragment extends SupportMapFragment
         }
 
         //Place current location marker
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        LatLng latLng_current = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
+        markerOptions.position(latLng_current);
         markerOptions.title("Current Position");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
         mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
 
         //move map camera
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,11));
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng_current,11));
 
     }
 
@@ -212,5 +259,7 @@ public class MapFragment extends SupportMapFragment
             // permissions this app might request
         }
     }
+
+
 
 }

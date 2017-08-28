@@ -89,7 +89,7 @@ public class ListActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-        mapFragment = new MapFragment();
+       // mapFragment = new MapFragment();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.mapframe, mapFragment);
