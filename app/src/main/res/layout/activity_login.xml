@@ -14,7 +14,8 @@ tools:context="com.test.mynewtest2.LoginActivity">
     android:layout_height="0dp"
     android:layout_weight="3"
     android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="1">
 
     <ImageView
         android:id="@+id/icon"
@@ -41,6 +42,14 @@ tools:context="com.test.mynewtest2.LoginActivity">
         android:id="@+id/detail"
         style="@style/ThemeOverlay.MyTextDetail"
         tools:text="Firebase User ID: 123456789abc" />
+
+    <Button
+        android:id="@+id/reset_password_button"
+        android:layout_width="167dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.08"
+        android:text="@string/reset_password"
+        android:theme="@style/ThemeOverlay.MyDarkButton" />
 
 </LinearLayout>
 

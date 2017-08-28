@@ -1,5 +1,6 @@
 package com.test.mynewtest2;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText edit_txt;
 
 public static class getLocVal {
-    static double longitude, latitude;
+    public static double longitude, latitude;
     double[] getVals(double x, double y) {
         double[] longlat = new double[2];
         longlat[0] = x;
@@ -49,10 +50,10 @@ public static class getLocVal {
         edit_txt = (EditText) findViewById(R.id.editText);
       final  FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        if (user != null) {
+        /*if (user != null) {
             btn_login.setText("SignOut");
             curr_usr.setText(getString(R.string.firebase_status_fmt,user.getEmail()));
-        }
+        }*/
         btn_items.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,7 +64,7 @@ public static class getLocVal {
             @Override
             public void onClick(View view) {
                 getLocVal glv = new getLocVal();
-                test_txt.setText(Double.toString(glv.longitude));
+                test_txt.setText(Double.toString(glv.longitude) + "\n\n" + Double.toString(glv.latitude));
             }
         });
 
@@ -101,10 +102,16 @@ public static class getLocVal {
         btn_db.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, DatabaseActivity.class));
+                if (user != null ){
+                    startActivity(new Intent(MainActivity.this, ItemsActivity.class));
+                }
+                else {
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                }
             }
         });
 
     }
+
 
 }

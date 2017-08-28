@@ -9,6 +9,9 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.test.mynewtest2.fragment.MapFragment;
+import com.test.mynewtest2.fragment.MyTopPostsFragment;
 import com.test.mynewtest2.fragment.RecentPostsFragment;
 import com.test.mynewtest2.fragment.MyPostsFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,10 +33,14 @@ public class ItemsActivity extends BaseActivity {
             private final Fragment[] mFragments = new Fragment[] {
                     new RecentPostsFragment(),
                     new MyPostsFragment(),
+                    new MyTopPostsFragment(),
+                    new MapFragment()
             };
             private final String[] mFragmentNames = new String[] {
-                       getString(R.string.heading_recent),
+                    getString(R.string.heading_recent),
                     getString(R.string.heading_my_posts),
+                    getString(R.string.heading_my_top_posts),
+                    getString(R.string.heading_map)
             };
             @Override
             public Fragment getItem(int position) {
@@ -62,7 +69,7 @@ public class ItemsActivity extends BaseActivity {
             }
         });
     }
-  //Todo firgure it out tho :P
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);

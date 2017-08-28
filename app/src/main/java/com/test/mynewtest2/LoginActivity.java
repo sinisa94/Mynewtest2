@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,11 +50,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         findViewById(R.id.email_create_account_button).setOnClickListener(this);
         findViewById(R.id.sign_out_button).setOnClickListener(this);
         findViewById(R.id.verify_email_button).setOnClickListener(this);
+        findViewById(R.id.reset_password_button).setOnClickListener(this);
 
         // [START initialize_auth]
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
+        final FirebaseUser user = mAuth.getCurrentUser();
+        if (user == null) {
+            // Disable button
+            findViewById(R.id.reset_password_button).setEnabled(false);
+        }
+        else {
+            findViewById(R.id.reset_password_button).setEnabled(true);
+        }
     }
 
     // [START on_start_check_user]
@@ -67,7 +77,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             if (mAuth.getCurrentUser() != null) {
                 onAuthSuccess(mAuth.getCurrentUser());
             }
-
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
@@ -150,7 +159,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         updateUI(null);
     }
 
-
     private void sendEmailVerification() {
         // Disable button
         findViewById(R.id.verify_email_button).setEnabled(false);
@@ -181,6 +189,34 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 });
         // [END send_email_verification]
     }
+
+    private void resetPassword(String email) {
+
+        // Reset Password
+            // [START reset_password]
+            mAuth.sendPasswordResetEmail(email)
+                    .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            // [START_EXCLUDE]
+                            // Re-enable button
+                            findViewById(R.id.reset_password_button).setEnabled(true);
+
+                            if (task.isSuccessful()) {
+                                Toast.makeText(LoginActivity.this,
+                                        "Pasword reseted ",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.e(TAG, "resetPassword", task.getException());
+                                Toast.makeText(LoginActivity.this,
+                                        "Failed to reset password.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                            // [END_EXCLUDE]
+                        }
+                    });
+            // [END reset_password]
+        }
 
     private boolean validateForm() {
         boolean valid = true;
@@ -262,6 +298,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             signOut();
         } else if (i == R.id.verify_email_button) {
             sendEmailVerification();
+        }
+         else if (i == R.id.reset_password_button){
+            resetPassword(mEmailField.getText().toString());
         }
     }
 }
