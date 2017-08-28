@@ -53,8 +53,11 @@ public class NewPostActivity extends BaseActivity {
     }
 
     private void submitPost() {
+        MainActivity.getLocVal glv = new MainActivity.getLocVal();
         final String title = mTitleField.getText().toString();
         final String body = mBodyField.getText().toString();
+        final double longitude = glv.longitude;
+        final double latitude = glv.latitude;
 
         // Title is required
         if (TextUtils.isEmpty(title)) {
@@ -90,7 +93,7 @@ public class NewPostActivity extends BaseActivity {
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             // Write new post
-                            writeNewPost(userId, user.username, title, body);
+                            writeNewPost(userId, user.username, title, body, longitude, latitude);
                         }
 
                         // Finish this Activity, back to the stream
@@ -121,11 +124,11 @@ public class NewPostActivity extends BaseActivity {
     }
 
     // [START write_fan_out]
-    private void writeNewPost(String userId, String username, String title, String body) {
+    private void writeNewPost(String userId, String username, String title, String body, double longitude, double latitude) {
         // Create new post at /user-posts/$userid/$postid and at
         // /posts/$postid simultaneously
         String key = mDatabase.child("posts").push().getKey();
-        Post post = new Post(userId, username, title, body);
+        Post post = new Post(userId, username, title, body, longitude, latitude);
         Map<String, Object> postValues = post.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();

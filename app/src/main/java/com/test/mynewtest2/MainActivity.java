@@ -1,26 +1,14 @@
 package com.test.mynewtest2;
 
 import android.content.Intent;
-import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputType;
-import android.text.TextUtils;
-import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.test.mynewtest2.models.User;
-import com.test.mynewtest2.MapsActivity;
-
-import java.util.Locale;
-
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -28,9 +16,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView curr_usr, test_txt;
     private String test;
     private EditText edit_txt;
-    public double e = 1.2;
-    public FusedLocationProviderClient mFusedLocationClient;
-
 
 public static class getLocVal {
     static double longitude, latitude;
@@ -62,13 +47,11 @@ public static class getLocVal {
         test_txt = (TextView) findViewById(R.id.test_text);
         btn_test2 = (Button) findViewById(R.id.button122);
         edit_txt = (EditText) findViewById(R.id.editText);
+      final  FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (mAuth.getCurrentUser() != null) {
-            btn_login.setText("ok");
-            //curr_usr.setText(getString(R.string.firebase_status_fmt,user.getEmail()));
+        if (user != null) {
+            btn_login.setText("SignOut");
+            curr_usr.setText(getString(R.string.firebase_status_fmt,user.getEmail()));
         }
         btn_items.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,17 +59,13 @@ public static class getLocVal {
                 startActivity(new Intent(MainActivity.this, ListActivity.class));
             }
         });
-
         btn_test2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getLocVal glv = new getLocVal();
-
                 test_txt.setText(Double.toString(glv.longitude));
-
             }
         });
-
 
         btn_map.setOnClickListener(new View.OnClickListener() {
             @Override
