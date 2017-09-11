@@ -13,7 +13,7 @@ public class Pins {
     public double latitude;
 
     Pins(){
-        // Default constructor required for calls to DataSnapshot.getValue(Post.class)
+        // Default constructor required for calls to DataSnapshot.getValue(Pins.class)
     }
 
     public Pins(String uid,double longitude, double latitude){

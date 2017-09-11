@@ -1,7 +1,9 @@
 package com.test.mynewtest2;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,7 +25,7 @@ import java.util.Objects;
 import static android.R.id.list;
 
 public class ListActivity extends AppCompatActivity {
-
+    private static final String TAG = "List Activity";
     private DatabaseReference mDatabase;
     public List<String> itemsList = new ArrayList<>();
     ArrayAdapter<String> adapter;
@@ -82,6 +84,8 @@ public class ListActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                startActivity(new Intent(ListActivity.this, TabsActivity.class));
+                Log.e(TAG,"Database ERROR! \n");
             }
         });
     }
