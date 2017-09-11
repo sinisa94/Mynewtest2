@@ -1,6 +1,5 @@
 package com.test.mynewtest2;
 
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,13 +9,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import com.google.android.gms.maps.MapFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.test.mynewtest2.fragment.MapFragment;
 import com.test.mynewtest2.models.Post;
 
 import java.util.ArrayList;
@@ -32,7 +29,7 @@ public class ListActivity extends AppCompatActivity {
     ArrayAdapter<String> adapter;
     private ListView listView;
     private TextView textView4;
-    MapFragment mapFragment;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
@@ -57,7 +54,6 @@ public class ListActivity extends AppCompatActivity {
                     String title = post.title;
                     String body = post.body;
                     String author = post.author;
-
                     final String uid = post.uid;
 
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -65,11 +61,9 @@ public class ListActivity extends AppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                         {
-
-                            textView4.setText("lat "  + "lon");
-
+                            Object o = listView.getItemAtPosition(position);
+                            textView4.setText("title: "+ o  + "pos " + position);
                         }
-
                     });
                     itemsList.add(items);
 
@@ -85,24 +79,10 @@ public class ListActivity extends AppCompatActivity {
 
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-       // mapFragment = new MapFragment();
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.mapframe, mapFragment);
-        transaction.commit();
-    }
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        if (requestCode == MapFragment.MY_PERMISSIONS_REQUEST_LOCATION){
-            mapFragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-        else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
     }
 }

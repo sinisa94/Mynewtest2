@@ -127,7 +127,6 @@ public class MapFragment extends SupportMapFragment
                     mGoogleMap.addMarker(new MarkerOptions()
                             .position(newLocation)
                             .title(title));
-
                 }
 
                 }
@@ -136,7 +135,6 @@ public class MapFragment extends SupportMapFragment
             public void onCancelled(DatabaseError databaseError) {}
         });
     }
-
 
 ///// end of onMapReady
     protected synchronized void buildGoogleApiClient() {
