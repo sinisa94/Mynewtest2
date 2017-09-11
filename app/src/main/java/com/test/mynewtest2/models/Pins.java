@@ -19,7 +19,7 @@ public class Pins {
     public Pins(String uid,double longitude, double latitude){
         this.uid = uid;
         this.longitude = longitude;
-        this.longitude = latitude;
+        this.latitude = latitude;
     }
 
 }
