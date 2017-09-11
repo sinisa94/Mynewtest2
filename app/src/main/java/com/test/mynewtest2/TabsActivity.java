@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.test.mynewtest2.fragment.MapFragment;
 import com.test.mynewtest2.fragment.MyPostsFragment;
+import com.test.mynewtest2.models.Post;
 
 public class TabsActivity extends AppCompatActivity {
 
@@ -62,8 +63,7 @@ public class TabsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(TabsActivity.this, NewPostActivity.class));
             }
         });
 
@@ -83,8 +83,6 @@ public class TabsActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         switch (id){
             case R.id.action_settings:
                 startActivity(new Intent(TabsActivity.this, SettingsActivity.class));
@@ -93,11 +91,6 @@ public class TabsActivity extends AppCompatActivity {
                 startActivity(new Intent(TabsActivity.this, MainActivity.class));
                 return true;
         }
-        /*if (id == R.id.action_settings) {
-            startActivity(new Intent(TabsActivity.this, SettingsActivity.class));
-            return true;
-        }*/
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -178,9 +171,9 @@ public class TabsActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "Map";
                 case 1:
-                    return "SECTION 2";
+                    return "Info";
                 case 2:
                     return "SECTION 3";
             }

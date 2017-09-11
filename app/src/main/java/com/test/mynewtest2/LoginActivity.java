@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -64,6 +65,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         else {
             findViewById(R.id.reset_password_button).setEnabled(true);
         }
+            // TODO make if(reg/not) signin with enterkey
+        /*final EditText passwurd = (EditText) findViewById(R.id.field_password);
+        passwurd.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    // Perform action on key press
+                    signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
+                    return true;
+                }
+                return false;
+            }
+        });*/
     }
 
     // [START on_start_check_user]
