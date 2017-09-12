@@ -37,6 +37,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.test.mynewtest2.NewPostActivity;
 import com.test.mynewtest2.models.Pins;
 import com.test.mynewtest2.models.Post;
 //import com.google.firebase.database.FirebaseDatabase;
@@ -173,6 +174,7 @@ public class MapFragment extends SupportMapFragment
             mCurrLocationMarker.remove();
         }
 
+
         //Place current location marker
         LatLng latLng_current = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
@@ -180,6 +182,9 @@ public class MapFragment extends SupportMapFragment
         markerOptions.title("Current Position");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
         mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+
+        NewPostActivity.getLocationValue glx = new NewPostActivity.getLocationValue();
+        glx.getValues(latLng_current.latitude,latLng_current.longitude);
 
         //move map camera
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng_current,11));
@@ -222,6 +227,7 @@ public class MapFragment extends SupportMapFragment
             }
         }
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode,

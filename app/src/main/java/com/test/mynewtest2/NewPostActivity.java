@@ -1,11 +1,14 @@
 package com.test.mynewtest2;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -13,10 +16,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.test.mynewtest2.fragment.MapFragment;
 import com.test.mynewtest2.models.Post;
 import com.test.mynewtest2.models.User;
+
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+
 
 public class NewPostActivity extends BaseActivity {
 
@@ -30,15 +39,46 @@ public class NewPostActivity extends BaseActivity {
     private EditText mTitleField;
     private EditText mBodyField;
     private FloatingActionButton mSubmitButton;
+    private TextView loc_info_txt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_post);
+        //  Write the location name.
+        //
+        loc_info_txt = (TextView) findViewById(R.id.loc_info_text);
+        getLocationValue glx = new getLocationValue();
+        final double longitude = glx.longitude;
+        final double latitude = glx.latitude;
+
+        Geocoder geocoder = new Geocoder(this, Locale.ENGLISH);
+        try {
+            List<Address> addresses = geocoder.getFromLocation( longitude,latitude, 1);
+
+            if(addresses != null) {
+                Address returnedAddress = addresses.get(0);
+                StringBuilder strReturnedAddress = new StringBuilder("Address:\n");
+                for(int i=0; i<returnedAddress.getMaxAddressLineIndex(); i++) {
+                    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
+                }
+                //loc_info_txt.setText(strReturnedAddress.toString());
+                //TODO check if multiple adresses exist for same geolocation.
+                loc_info_txt.setText(returnedAddress.getAddressLine(0));
+            }
+            else{
+                loc_info_txt.setText("No Address returned!");
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            loc_info_txt.setText("Canont get Address!");
+        }
 
         // [START initialize_database_ref]
         mDatabase = FirebaseDatabase.getInstance().getReference();
         // [END initialize_database_ref]
+
 
         mTitleField = (EditText) findViewById(R.id.field_title);
         mBodyField = (EditText) findViewById(R.id.field_body);
@@ -52,12 +92,26 @@ public class NewPostActivity extends BaseActivity {
         });
     }
 
+
+    public static class getLocationValue {
+        public static double longitude, latitude;
+        public double[] getValues(double x, double y) {
+            double[] longlat = new double[2];
+            longlat[0] = x;
+            longlat[1] = y;
+            longitude = x;
+            latitude = y;
+            return longlat;
+        }
+    }
+
+
+
+
+
     private void submitPost() {
-        MainActivity.getLocVal glv = new MainActivity.getLocVal();
         final String title = mTitleField.getText().toString();
         final String body = mBodyField.getText().toString();
-        final double longitude = glv.longitude;
-        final double latitude = glv.latitude;
 
         // Title is required
         if (TextUtils.isEmpty(title)) {
@@ -83,7 +137,9 @@ public class NewPostActivity extends BaseActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // Get user value
                         User user = dataSnapshot.getValue(User.class);
-
+                        MainActivity.getLocVal glv = new MainActivity.getLocVal();
+                        final double longitude = glv.longitude;
+                        final double latitude = glv.latitude;
                         // [START_EXCLUDE]
                         if (user == null) {
                             // User is null, error out

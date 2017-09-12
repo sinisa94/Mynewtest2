@@ -31,16 +31,17 @@ public class ItemsActivity extends BaseActivity {
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[] {
+                    new MapFragment(),
                     new RecentPostsFragment(),
                     new MyPostsFragment(),
-                    new MyTopPostsFragment(),
-                    new MapFragment()
+                    new MyTopPostsFragment()
+
             };
             private final String[] mFragmentNames = new String[] {
+                    getString(R.string.heading_map),
                     getString(R.string.heading_recent),
                     getString(R.string.heading_my_posts),
-                    getString(R.string.heading_my_top_posts),
-                    getString(R.string.heading_map)
+                    getString(R.string.heading_my_top_posts)
             };
             @Override
             public Fragment getItem(int position) {
@@ -54,6 +55,7 @@ public class ItemsActivity extends BaseActivity {
             public CharSequence getPageTitle(int position) {
                 return mFragmentNames[position];
             }
+
         };
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -79,14 +81,17 @@ public class ItemsActivity extends BaseActivity {
     @Override
    public boolean onOptionsItemSelected(MenuItem item) {
         int i = item.getItemId();
-        if (i == R.id.action_logout) {
-            FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
-            return true;
-        } else {
-            return super.onOptionsItemSelected(item);
+        switch (i) {
+            case R.id.action_logout:
+                FirebaseAuth.getInstance().signOut();
+                return true;
+            case R.id.action_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            case R.id.action_devtools:
+                startActivity(new Intent(this, MainActivity.class));
+                return true;
         }
+            return super.onOptionsItemSelected(item);
     }
-
 }

@@ -23,17 +23,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TabsActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".ItemsActivity" />
         <activity android:name=".DatabaseActivity" />
         <activity android:name=".PostDetailActivity" />
-        <activity android:name=".ItemsActivity" />
+        <activity android:name=".TabsActivity" />
         <activity android:name=".NewPostActivity" />
         <activity android:name=".ListActivity" />
         <!--
@@ -54,21 +54,11 @@
         <activity
             android:name=".Maps2Activity"
             android:label="@string/title_activity_maps2" />
-        <activity android:name=".AdressActivity" />
-        <activity
-            android:name=".TabActivity"
-            android:label="@string/title_activity_tab"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SettingsActivity" />
-        <activity
-            android:name=".testActivity"
-            android:label="@string/title_activity_test"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_tabs"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SettingsActivity"></activity>
     </application>
 
 </manifest>
