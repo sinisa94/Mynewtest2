@@ -106,9 +106,6 @@ public class NewPostActivity extends BaseActivity {
     }
 
 
-
-
-
     private void submitPost() {
         final String title = mTitleField.getText().toString();
         final String body = mBodyField.getText().toString();

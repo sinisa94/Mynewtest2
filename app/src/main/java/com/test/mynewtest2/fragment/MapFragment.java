@@ -55,6 +55,7 @@ public class MapFragment extends SupportMapFragment
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     Marker mCurrLocationMarker;
+
     // [START define_database_reference]
     private DatabaseReference mDatabase;
     // [END define_database_reference]
@@ -106,9 +107,7 @@ public class MapFragment extends SupportMapFragment
             mGoogleMap.setMyLocationEnabled(true);
         }
 
-
         ///middle of onMapReady
-
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -130,14 +129,14 @@ public class MapFragment extends SupportMapFragment
                             .title(title));
                 }
 
-                }
+            }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
     }
 
-///// end of onMapReady
+// end of onMapReady
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                 .addConnectionCallbacks(this)
@@ -173,7 +172,6 @@ public class MapFragment extends SupportMapFragment
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }
-
 
         //Place current location marker
         LatLng latLng_current = new LatLng(location.getLatitude(), location.getLongitude());

@@ -71,7 +71,8 @@ public static class getLocVal {
         btn_map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, Maps2Activity.class));
+                btn_map.setText("MapsActivity");
+                startActivity(new Intent(MainActivity.this, MapsActivity.class));
             }
         });
         btn_test.setOnClickListener(new View.OnClickListener() {
