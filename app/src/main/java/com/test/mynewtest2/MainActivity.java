@@ -17,17 +17,6 @@ public class MainActivity extends AppCompatActivity {
     private String test;
     private EditText edit_txt;
 
-public static class getLocVal {
-    public static double longitude, latitude;
-    double[] getVals(double x, double y) {
-        double[] longlat = new double[2];
-        longlat[0] = x;
-        longlat[1] = y;
-        longitude = x;
-        latitude = y;
-        return longlat;
-    }
-}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,21 +53,20 @@ public static class getLocVal {
             public void onClick(View view) {
                 btn_test2.setText("gCL");
                 BaseActivity.getCurrentLocation gCL = new BaseActivity.getCurrentLocation();
-                test_txt.setText(Double.toString(gCL.longitude) + "\n\n" + Double.toString(gCL.latitude));
+                test_txt.setText(Double.toString(gCL.latitude) + "\n\n" + Double.toString(gCL.longitude));
             }
         });
 
         btn_map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btn_map.setText("MapsActivity");
-                startActivity(new Intent(MainActivity.this, MapsActivity.class));
+                btn_map.setText("yolo");
             }
         });
         btn_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, TabsActivity.class));
+                startActivity(new Intent(MainActivity.this, ItemsActivity.class));
             }
         });
         btn_newpost.setOnClickListener(new View.OnClickListener() {

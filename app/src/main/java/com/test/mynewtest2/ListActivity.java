@@ -84,7 +84,7 @@ public class ListActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                startActivity(new Intent(ListActivity.this, TabsActivity.class));
+                startActivity(new Intent(ListActivity.this, ItemsActivity.class));
                 Log.e(TAG,"Database ERROR! \n");
             }
         });

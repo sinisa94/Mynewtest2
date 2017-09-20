@@ -31,9 +31,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ItemsActivity" />
-        <activity android:name=".DatabaseActivity" />
         <activity android:name=".PostDetailActivity" />
-        <activity android:name=".TabsActivity" />
         <activity android:name=".NewPostActivity" />
         <activity android:name=".ListActivity" />
         <!--
@@ -48,16 +46,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps" />
-        <activity
-            android:name=".Maps2Activity"
-            android:label="@string/title_activity_maps2" />
         <activity android:name=".SettingsActivity" />
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_tabs"
+            android:label="Dev Tools"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

@@ -1,20 +1,14 @@
 package com.test.mynewtest2.fragment;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -28,19 +22,16 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 //import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.test.mynewtest2.BaseActivity;
-import com.test.mynewtest2.GlobalLocation;
-import com.test.mynewtest2.NewPostActivity;
-import com.test.mynewtest2.models.Pins;
 import com.test.mynewtest2.models.Post;
 //import com.google.firebase.database.FirebaseDatabase;
 
@@ -110,6 +101,8 @@ public class MapFragment extends SupportMapFragment
         }
 
         ///middle of onMapReady
+        //move map camera
+
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -122,8 +115,8 @@ public class MapFragment extends SupportMapFragment
                     //Getting the data from snapshot
                     Post post = DataSnapshot.getValue(Post.class);
 
-                    double longitude = post.longitude;
                     double latitude = post.latitude;
+                    double longitude = post.longitude;
                     String title = post.title;
                     LatLng newLocation = new LatLng(latitude,longitude);
                     mGoogleMap.addMarker(new MarkerOptions()
@@ -179,7 +172,7 @@ public class MapFragment extends SupportMapFragment
         }
 
         //Place current location marker
-        LatLng latLng_current = new LatLng(location.getLatitude(), location.getLongitude());
+        LatLng latLng_current = new LatLng(location.getLatitude(),location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng_current);
         markerOptions.title("Current Position");
@@ -187,14 +180,8 @@ public class MapFragment extends SupportMapFragment
         mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
         //base activity class location
         BaseActivity.getCurrentLocation gCL = new BaseActivity.getCurrentLocation();
-        gCL.getValues(location.getLatitude(),location.getLongitude());
-
-        /*NewPostActivity.getLocationValue glx = new NewPostActivity.getLocationValue();
-        glx.getValues(latLng_current.latitude,latLng_current.longitude);
-*/
-        //move map camera
+        gCL.getValues(location.getLongitude(),location.getLatitude());
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng_current,11));
-
     }
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;

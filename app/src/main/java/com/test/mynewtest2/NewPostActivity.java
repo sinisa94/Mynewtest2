@@ -31,9 +31,11 @@ public class NewPostActivity extends BaseActivity {
 
     private static final String TAG = "NewPostActivity";
     private static final String REQUIRED = "Required";
+    public String pinName;
 
     // [START declare_database_ref]
     private DatabaseReference mDatabase;
+    private DatabaseReference postz;
     // [END declare_database_ref]
 
     private EditText mTitleField;
@@ -48,13 +50,13 @@ public class NewPostActivity extends BaseActivity {
         //  Write the location name.
         //
         loc_info_txt = (TextView) findViewById(R.id.loc_info_text);
-        getLocationValue glx = new getLocationValue();
-        final double longitude = glx.longitude;
-        final double latitude = glx.latitude;
+        BaseActivity.getCurrentLocation gCL = new getCurrentLocation();
+        final double latitude = gCL.latitude;
+        final double longitude = gCL.longitude;
 
         Geocoder geocoder = new Geocoder(this, Locale.ENGLISH);
         try {
-            List<Address> addresses = geocoder.getFromLocation( longitude,latitude, 1);
+            List<Address> addresses = geocoder.getFromLocation( latitude, longitude, 1);
 
             if(addresses != null) {
                 Address returnedAddress = addresses.get(0);
@@ -65,6 +67,7 @@ public class NewPostActivity extends BaseActivity {
                 //loc_info_txt.setText(strReturnedAddress.toString());
                 //TODO check if multiple adresses exist for same geolocation.
                 loc_info_txt.setText(returnedAddress.getAddressLine(0));
+                pinName = returnedAddress.getAddressLine(0);
             }
             else{
                 loc_info_txt.setText("No Address returned!");
@@ -72,11 +75,12 @@ public class NewPostActivity extends BaseActivity {
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-            loc_info_txt.setText("Canont get Address!");
+            loc_info_txt.setText("Can't get Address!");
         }
 
         // [START initialize_database_ref]
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference postz = mDatabase.child("posts");
         // [END initialize_database_ref]
 
 
@@ -92,23 +96,10 @@ public class NewPostActivity extends BaseActivity {
         });
     }
 
-
-    public static class getLocationValue {
-        public static double longitude, latitude;
-        public double[] getValues(double x, double y) {
-            double[] longlat = new double[2];
-            longlat[0] = x;
-            longlat[1] = y;
-            longitude = x;
-            latitude = y;
-            return longlat;
-        }
-    }
-
-
     private void submitPost() {
         final String title = mTitleField.getText().toString();
         final String body = mBodyField.getText().toString();
+
 
         // Title is required
         if (TextUtils.isEmpty(title)) {
@@ -135,9 +126,11 @@ public class NewPostActivity extends BaseActivity {
                         // Get user value
                         User user = dataSnapshot.getValue(User.class);
                         getCurrentLocation gCL = new getCurrentLocation();
-                        //MainActivity.getLocVal glv = new MainActivity.getLocVal();
-                        final double longitude = gCL.longitude;
                         final double latitude = gCL.latitude;
+                        final double longitude = gCL.longitude;
+                        boolean duplicate;
+                        duplicate = false;
+
                         // [START_EXCLUDE]
                         if (user == null) {
                             // User is null, error out
@@ -145,9 +138,37 @@ public class NewPostActivity extends BaseActivity {
                             Toast.makeText(NewPostActivity.this,
                                     "Error: could not fetch user.",
                                     Toast.LENGTH_SHORT).show();
-                        } else {
+                        }
+
+                        /*if(duplicate = false){
+                            postz.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.child(pinName).exists()){
+                                        Log.e(TAG, "Post " + pinName + " already exists");
+                                        Toast.makeText(NewPostActivity.this,
+                                                "Error: data already exists",
+                                                Toast.LENGTH_SHORT).show();
+                                        duplicate=
+
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    Toast.makeText(NewPostActivity.this,
+                                            "Error: dberror.",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                        */
+                        //TODO find a way to check if value exists in table
+
+                        else {
+
                             // Write new post
-                            writeNewPost(userId, user.username, title, body, longitude, latitude);
+                            writeNewPost(userId, user.username, title, body,latitude, longitude, pinName);
                         }
 
                         // Finish this Activity, back to the stream
@@ -178,11 +199,12 @@ public class NewPostActivity extends BaseActivity {
     }
 
     // [START write_fan_out]
-    private void writeNewPost(String userId, String username, String title, String body, double longitude, double latitude) {
+    private void writeNewPost(String userId, String username, String title, String body, double latitude, double longitude, String pinName) {
         // Create new post at /user-posts/$userid/$postid and at
         // /posts/$postid simultaneously
+
         String key = mDatabase.child("posts").push().getKey();
-        Post post = new Post(userId, username, title, body, longitude, latitude);
+        Post post = new Post(userId, username, title, body, latitude, longitude, pinName);
         Map<String, Object> postValues = post.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();

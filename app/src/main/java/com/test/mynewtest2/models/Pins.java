@@ -9,17 +9,20 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class Pins {
     public String uid;
-    public double longitude;
     public double latitude;
+    public double longitude;
+    public String pinName;
+
 
     Pins(){
         // Default constructor required for calls to DataSnapshot.getValue(Pins.class)
     }
 
-    public Pins(String uid,double longitude, double latitude){
+    public Pins(String uid, double latitude, double longitude, String pinName){
         this.uid = uid;
-        this.longitude = longitude;
         this.latitude = latitude;
+        this.longitude = longitude;
+        this.pinName = pinName;
     }
 
 }

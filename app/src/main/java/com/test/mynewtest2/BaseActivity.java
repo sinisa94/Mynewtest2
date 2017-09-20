@@ -3,6 +3,8 @@ package com.test.mynewtest2;
 import android.app.ProgressDialog;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
+
+import com.google.android.gms.maps.model.LatLng;
 import com.test.mynewtest2.R;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -37,14 +39,14 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public static class getCurrentLocation {
-        public static double longitude, latitude;
+        public static double latitude, longitude;
         public double[] getValues(double x, double y) {
-            double[] longlat = new double[2];
-            longlat[0] = x;
-            longlat[1] = y;
-            longitude = x;
+            double[] latlong = new double[2];
+            latlong[0] = x;
+            latlong[1] = y;
             latitude = y;
-            return longlat;
+            longitude = x;
+            return latlong;
         }
     }
 
