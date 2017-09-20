@@ -1,6 +1,5 @@
 package com.test.mynewtest2;
 
-import android.content.ClipData;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -63,8 +62,9 @@ public static class getLocVal {
         btn_test2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getLocVal glv = new getLocVal();
-                test_txt.setText(Double.toString(glv.longitude) + "\n\n" + Double.toString(glv.latitude));
+                btn_test2.setText("gCL");
+                BaseActivity.getCurrentLocation gCL = new BaseActivity.getCurrentLocation();
+                test_txt.setText(Double.toString(gCL.longitude) + "\n\n" + Double.toString(gCL.latitude));
             }
         });
 

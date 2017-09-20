@@ -37,6 +37,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.test.mynewtest2.BaseActivity;
+import com.test.mynewtest2.GlobalLocation;
 import com.test.mynewtest2.NewPostActivity;
 import com.test.mynewtest2.models.Pins;
 import com.test.mynewtest2.models.Post;
@@ -136,6 +138,9 @@ public class MapFragment extends SupportMapFragment
         });
     }
 
+
+
+
 // end of onMapReady
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
@@ -180,10 +185,13 @@ public class MapFragment extends SupportMapFragment
         markerOptions.title("Current Position");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
         mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+        //base activity class location
+        BaseActivity.getCurrentLocation gCL = new BaseActivity.getCurrentLocation();
+        gCL.getValues(location.getLatitude(),location.getLongitude());
 
-        NewPostActivity.getLocationValue glx = new NewPostActivity.getLocationValue();
+        /*NewPostActivity.getLocationValue glx = new NewPostActivity.getLocationValue();
         glx.getValues(latLng_current.latitude,latLng_current.longitude);
-
+*/
         //move map camera
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng_current,11));
 

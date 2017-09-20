@@ -33,8 +33,19 @@ public class BaseActivity extends AppCompatActivity {
         hideProgressDialog();
     }
     public String getUid() {
-        return FirebaseAuth.getInstance().getCurrentUser().getUid();
+            return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
+    public static class getCurrentLocation {
+        public static double longitude, latitude;
+        public double[] getValues(double x, double y) {
+            double[] longlat = new double[2];
+            longlat[0] = x;
+            longlat[1] = y;
+            longitude = x;
+            latitude = y;
+            return longlat;
+        }
+    }
 
 }

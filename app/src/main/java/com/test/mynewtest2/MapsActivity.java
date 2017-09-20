@@ -114,6 +114,7 @@ public class MapsActivity extends AppCompatActivity {
                             MainActivity.getLocVal glv = new MainActivity.getLocVal();
                             glv.getVals(x,y);
 
+
                             txtView.setText( "l1" + Double.toString(glv.longitude)+ "l2" + Double.toString(glv.latitude));
                         } else {
                             Log.w(TAG, "getLastLocation:exception", task.getException());

@@ -134,9 +134,10 @@ public class NewPostActivity extends BaseActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // Get user value
                         User user = dataSnapshot.getValue(User.class);
-                        MainActivity.getLocVal glv = new MainActivity.getLocVal();
-                        final double longitude = glv.longitude;
-                        final double latitude = glv.latitude;
+                        getCurrentLocation gCL = new getCurrentLocation();
+                        //MainActivity.getLocVal glv = new MainActivity.getLocVal();
+                        final double longitude = gCL.longitude;
+                        final double latitude = gCL.latitude;
                         // [START_EXCLUDE]
                         if (user == null) {
                             // User is null, error out
