@@ -15,6 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.test.mynewtest2.fragment.MapFragment;
 import com.test.mynewtest2.models.Post;
@@ -31,7 +32,7 @@ public class NewPostActivity extends BaseActivity {
 
     private static final String TAG = "NewPostActivity";
     private static final String REQUIRED = "Required";
-    public String pinName;
+    public String pinName = "Unknown yet.";
 
     // [START declare_database_ref]
     private DatabaseReference mDatabase;
@@ -80,7 +81,7 @@ public class NewPostActivity extends BaseActivity {
 
         // [START initialize_database_ref]
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference postz = mDatabase.child("posts");
+        postz = FirebaseDatabase.getInstance().getReference().child("posts");
         // [END initialize_database_ref]
 
 
@@ -124,12 +125,11 @@ public class NewPostActivity extends BaseActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // Get user value
-                        User user = dataSnapshot.getValue(User.class);
+                        final User user = dataSnapshot.getValue(User.class);
                         getCurrentLocation gCL = new getCurrentLocation();
                         final double latitude = gCL.latitude;
                         final double longitude = gCL.longitude;
-                        boolean duplicate;
-                        duplicate = false;
+                        boolean duplicate = false;
 
                         // [START_EXCLUDE]
                         if (user == null) {
@@ -140,8 +140,10 @@ public class NewPostActivity extends BaseActivity {
                                     Toast.LENGTH_SHORT).show();
                         }
 
-                        /*if(duplicate = false){
-                            postz.addListenerForSingleValueEvent(new ValueEventListener() {
+                        if(user != null){
+                            Query query = postz.orderByChild("posts").equalTo(pinName);
+                            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                //TODO refactor whole thing into new funct
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.child(pinName).exists()){
@@ -149,8 +151,15 @@ public class NewPostActivity extends BaseActivity {
                                         Toast.makeText(NewPostActivity.this,
                                                 "Error: data already exists",
                                                 Toast.LENGTH_SHORT).show();
-                                        duplicate=
+                                                //it's duplicate
+                                    }
+                                    else {
+                                    Toast.makeText(NewPostActivity.this,
+                                                "OK:"+user.username + "," + pinName + "posted",
+                                                Toast.LENGTH_SHORT).show();
 
+
+                                        writeNewPost(userId, user.username, title, body,latitude, longitude, pinName);
                                     }
                                 }
 
@@ -162,13 +171,13 @@ public class NewPostActivity extends BaseActivity {
                                 }
                             });
                         }
-                        */
-                        //TODO find a way to check if value exists in table
 
                         else {
-
+                            Toast.makeText(NewPostActivity.this,
+                                    "Its Else statement test" + pinName,
+                                    Toast.LENGTH_SHORT).show();
                             // Write new post
-                            writeNewPost(userId, user.username, title, body,latitude, longitude, pinName);
+                            //writeNewPost(userId, user.username, title, body,latitude, longitude, pinName);
                         }
 
                         // Finish this Activity, back to the stream
