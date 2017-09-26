@@ -141,24 +141,22 @@ public class NewPostActivity extends BaseActivity {
                         }
 
                         if(user != null){
-                            Query query = postz.orderByChild("posts").equalTo(pinName);
+                            Query query = postz.orderByChild("pinname").equalTo(pinName);
                             query.addListenerForSingleValueEvent(new ValueEventListener() {
-                                //TODO refactor whole thing into new funct
                                 @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    if (dataSnapshot.child(pinName).exists()){
-                                        Log.e(TAG, "Post " + pinName + " already exists");
+                                public void onDataChange(DataSnapshot ddataSnapshot) {
+                                    if (ddataSnapshot.exists()){
+                                        Log.e(TAG, "P(pinnametest)ost " + pinName + " already exists");
                                         Toast.makeText(NewPostActivity.this,
                                                 "Error: data already exists",
                                                 Toast.LENGTH_SHORT).show();
-                                                //it's duplicate
                                     }
-                                    else {
-                                    Toast.makeText(NewPostActivity.this,
+
+                                    if (!ddataSnapshot.exists()){
+                                        Toast.makeText(NewPostActivity.this,
                                                 "OK:"+user.username + "," + pinName + "posted",
                                                 Toast.LENGTH_SHORT).show();
-
-
+                                        // Write new post.
                                         writeNewPost(userId, user.username, title, body,latitude, longitude, pinName);
                                     }
                                 }
@@ -174,10 +172,8 @@ public class NewPostActivity extends BaseActivity {
 
                         else {
                             Toast.makeText(NewPostActivity.this,
-                                    "Its Else statement test" + pinName,
+                                    "You're not logged in",
                                     Toast.LENGTH_SHORT).show();
-                            // Write new post
-                            //writeNewPost(userId, user.username, title, body,latitude, longitude, pinName);
                         }
 
                         // Finish this Activity, back to the stream
