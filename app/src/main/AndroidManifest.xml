@@ -30,9 +30,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ItemsActivity" />
+        <activity android:name=".ItemsActivity"
+                  android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".PostDetailActivity" />
-        <activity android:name=".NewPostActivity" />
+        <activity android:name=".NewPostActivity"
+                  android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".ListActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

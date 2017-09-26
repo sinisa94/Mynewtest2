@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:windowSoftInputMode="adjustResize"
     tools:context="com.test.mynewtest2.NewPostActivity">
 
     <EditText
@@ -44,6 +45,7 @@
         android:id="@+id/fab_submit_post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:windowSoftInputMode="adjustResize"
         android:src="@drawable/ic_navigation_check_24"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
